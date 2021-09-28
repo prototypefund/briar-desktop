@@ -27,6 +27,7 @@ import org.briarproject.bramble.account.AccountModule
 import org.briarproject.bramble.api.FeatureFlags
 import org.briarproject.bramble.api.db.DatabaseConfig
 import org.briarproject.bramble.api.event.EventExecutor
+import org.briarproject.bramble.api.mailbox.MailboxDirectory
 import org.briarproject.bramble.api.plugin.PluginConfig
 import org.briarproject.bramble.api.plugin.TorConstants.DEFAULT_CONTROL_PORT
 import org.briarproject.bramble.api.plugin.TorConstants.DEFAULT_SOCKS_PORT
@@ -41,6 +42,7 @@ import org.briarproject.bramble.network.JavaNetworkModule
 import org.briarproject.bramble.plugin.tcp.LanTcpPluginFactory
 import org.briarproject.bramble.plugin.tor.CircumventionModule
 import org.briarproject.bramble.plugin.tor.UnixTorPluginFactory
+import org.briarproject.bramble.plugin.tor.WindowsTorPluginFactory
 import org.briarproject.bramble.socks.SocksModule
 import org.briarproject.bramble.system.ClockModule
 import org.briarproject.bramble.system.DefaultTaskSchedulerModule
@@ -49,6 +51,7 @@ import org.briarproject.bramble.system.DesktopSecureRandomModule
 import org.briarproject.bramble.system.JavaSystemModule
 import org.briarproject.bramble.util.OsUtils.isLinux
 import org.briarproject.bramble.util.OsUtils.isMac
+import org.briarproject.bramble.util.OsUtils.isWindows
 import org.briarproject.briar.attachment.AttachmentModule
 import org.briarproject.briar.desktop.attachment.media.ImageCompressor
 import org.briarproject.briar.desktop.attachment.media.ImageCompressorImpl
@@ -121,6 +124,12 @@ internal class DesktopModule(
     fun provideBriarExecutors(briarExecutors: BriarExecutorsImpl): BriarExecutors = briarExecutors
 
     @Provides
+    @MailboxDirectory
+    internal fun provideMailboxDirectory(): File {
+        return appDir.resolve("mailbox").toFile()
+    }
+
+    @Provides
     @TorDirectory
     internal fun provideTorDirectory(): File {
         return appDir.resolve("tor").toFile()
@@ -137,9 +146,16 @@ internal class DesktopModule(
     internal fun provideTorControlPort() = controlPort
 
     @Provides
-    internal fun providePluginConfig(tor: UnixTorPluginFactory, lan: LanTcpPluginFactory): PluginConfig {
-        val duplex: List<DuplexPluginFactory> =
-            if (isLinux() || isMac()) listOf(tor, lan) else listOf(lan)
+    internal fun providePluginConfig(
+        unixTor: UnixTorPluginFactory,
+        winTor: WindowsTorPluginFactory,
+        lan: LanTcpPluginFactory
+    ): PluginConfig {
+        val duplex: List<DuplexPluginFactory> = when {
+            isLinux() || isMac() -> listOf(unixTor, lan)
+            isWindows() -> listOf(winTor, lan)
+            else -> emptyList()
+        }
         return object : PluginConfig {
             override fun getDuplexFactories(): Collection<DuplexPluginFactory> = duplex
             override fun getSimplexFactories(): Collection<SimplexPluginFactory> = emptyList()

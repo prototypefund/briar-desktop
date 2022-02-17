@@ -49,6 +49,7 @@ val Colors.textSecondary: Color get() = if (isLight) TextSecondaryMaterialLight 
 val Colors.privateMessageDate: Color get() = Gray200
 val Colors.buttonTextNegative: Color get() = Red500
 val Colors.buttonTextPositive: Color get() = Blue400
+val Colors.tabs: Color get() = if (isLight) Color.White else materialDarkBg
 
 val DarkColors = darkColors(
     primary = Blue500,

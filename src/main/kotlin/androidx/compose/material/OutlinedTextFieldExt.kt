@@ -188,10 +188,12 @@ fun OutlinedPasswordTextField(
     var isPasswordVisible by remember { mutableStateOf(false) }
 
     val clipboardManager: ClipboardManager = LocalClipboardManager.current
-    CompositionLocalProvider(LocalClipboardManager provides object : ClipboardManager {
-        override fun getText() = clipboardManager.getText() // allow copying text from clipboard
-        override fun setText(annotatedString: AnnotatedString) = Unit // don't allow copying text into clipboard
-    }) {
+    CompositionLocalProvider(
+        LocalClipboardManager provides object : ClipboardManager {
+            override fun getText() = clipboardManager.getText() // allow copying text from clipboard
+            override fun setText(annotatedString: AnnotatedString) = Unit // don't allow copying text into clipboard
+        }
+    ) {
 
         OutlinedTextField(
             value = value,

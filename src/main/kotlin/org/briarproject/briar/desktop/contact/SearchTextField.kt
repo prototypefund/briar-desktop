@@ -116,13 +116,14 @@ fun ContactListTopAppBar(
                             onSearch()
                             textFieldFocusRequester.requestFocus()
                         },
+                        modifier = Modifier.pointerHoverIcon(PointerIconDefaults.Hand)
                     ) {
                         Icon(Icons.Filled.Search, i18n("access.contacts.search"))
                     }
                     IconButton(
                         onClick = onContactAdd,
                         modifier = Modifier.padding(end = 14.dp).then(Modifier.size(32.dp))
-                            .pointerHoverIcon(PointerIconDefaults.Default)
+                            .pointerHoverIcon(PointerIconDefaults.Hand)
                     ) {
                         Icon(
                             Icons.Filled.PersonAdd,
@@ -136,6 +137,7 @@ fun ContactListTopAppBar(
     }
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun SearchInput(
     searchValue: String,
@@ -162,7 +164,7 @@ fun SearchInput(
                     onBack()
                     focusManager.clearFocus(true)
                 },
-                Modifier.then(Modifier.padding(start = 20.dp, end = 16.dp).size(24.dp))
+                Modifier.padding(start = 20.dp, end = 16.dp).size(24.dp).pointerHoverIcon(PointerIconDefaults.Hand)
             ) {
                 Icon(Icons.Filled.ArrowBack, i18n("access.contacts.search"))
             }

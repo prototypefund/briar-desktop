@@ -97,6 +97,7 @@ dependencies {
 
     testImplementation(kotlin("test-testng"))
     testImplementation("commons-io:commons-io:2.11.0")
+    testImplementation("org.jetbrains.compose.ui:ui-test-junit4:1.1.1")
     kaptTest("com.google.dagger:dagger-compiler:$daggerVersion")
 }
 

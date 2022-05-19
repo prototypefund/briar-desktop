@@ -115,15 +115,13 @@ fun ContactListTopAppBar(
                         {
                             onSearch()
                             textFieldFocusRequester.requestFocus()
-                        },
-                        modifier = Modifier.pointerHoverIcon(PointerIconDefaults.Hand)
+                        }
                     ) {
                         Icon(Icons.Filled.Search, i18n("access.contacts.search"))
                     }
                     IconButton(
                         onClick = onContactAdd,
                         modifier = Modifier.padding(end = 14.dp).then(Modifier.size(32.dp))
-                            .pointerHoverIcon(PointerIconDefaults.Hand)
                     ) {
                         Icon(
                             Icons.Filled.PersonAdd,
@@ -164,7 +162,7 @@ fun SearchInput(
                     onBack()
                     focusManager.clearFocus(true)
                 },
-                Modifier.padding(start = 20.dp, end = 16.dp).size(24.dp).pointerHoverIcon(PointerIconDefaults.Hand)
+                Modifier.padding(start = 20.dp, end = 16.dp).size(24.dp).pointerHoverIcon(PointerIconDefaults.Default)
             ) {
                 Icon(Icons.Filled.ArrowBack, i18n("access.contacts.search"))
             }

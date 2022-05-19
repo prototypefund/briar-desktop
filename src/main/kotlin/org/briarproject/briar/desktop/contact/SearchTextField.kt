@@ -68,7 +68,6 @@ fun SearchTextField(searchValue: String, onValueChange: (String) -> Unit, onCont
         SearchInput(
             searchValue,
             onValueChange,
-            onContactAdd,
             onBack = { setSearchMode(false) },
             textFieldFocusRequester,
         )
@@ -139,7 +138,6 @@ fun ContactListTopAppBar(
 fun SearchInput(
     searchValue: String,
     onValueChange: (String) -> Unit,
-    onContactAdd: () -> Unit,
     onBack: () -> Unit,
     textFieldFocusRequester: FocusRequester,
 ) {

@@ -97,7 +97,6 @@ fun ContactListTopAppBar(
     Surface(
         color = MaterialTheme.colors.surfaceVariant,
         contentColor = MaterialTheme.colors.onSurface,
-        elevation = 4.dp,
     ) {
         Box {
             Row(

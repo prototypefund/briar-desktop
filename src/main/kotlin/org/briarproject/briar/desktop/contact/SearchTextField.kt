@@ -149,7 +149,7 @@ fun SearchInput(
         textStyle = LocalTextStyle.current.copy(
             color = MaterialTheme.colors.onSurface
         ),
-        placeholder = { Text("Search", style = MaterialTheme.typography.body1) },
+        placeholder = { Text(i18n("contacts.search.placeholder"), style = MaterialTheme.typography.body1) },
         shape = RoundedCornerShape(0.dp),
         colors = TextFieldDefaults.textFieldColors(backgroundColor = MaterialTheme.colors.surfaceVariant),
         leadingIcon = {

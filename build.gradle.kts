@@ -97,11 +97,15 @@ dependencies {
 
     testImplementation(kotlin("test-testng"))
     testImplementation("commons-io:commons-io:2.11.0")
-    testImplementation("org.jetbrains.compose.ui:ui-test-junit4:1.1.1")
     kaptTest("com.google.dagger:dagger-compiler:$daggerVersion")
+
+    @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
+    testImplementation(compose.uiTestJUnit4)
 }
 
 tasks.test {
+    // todo: both cannot be used at once, we probably have to split tests into UI (Compose, JUnit) and Kotlin code (testNG)
+    // useJUnit()
     useTestNG()
 }
 
